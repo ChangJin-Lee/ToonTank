@@ -15,17 +15,34 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
-	UPROPERTY(VisibleAnywhere)
+	// 어디서든 보임
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	int32 VisibleAnywhereInt = 32;
 
-	UPROPERTY(EditAnywhere)
+	// 어디서든 보이고 편집도 가능
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 EditAnywhereInt = 32;
 
-	UPROPERTY(VisibleInstanceOnly)
+	// 인스턴스에서만 보이고 디폴트 블루프린트에서 안보임
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite)
 	int32 VisibleInstanceOnlyInt = 32;
 
+	// 디폴트 블루프린트에서만 보임
+	UPROPERTY(VisibleDefaultsOnly)
+	int32 VisibleDefulatsOnlyInt = 5;
+	
+	// 인스턴스에서만 보임
 	UPROPERTY(VisibleInstanceOnly)
 	int32 RunSpeed = 10;
+	
+	UPROPERTY(EditDefaultsOnly)
+	int32 EditDefaultsOnlyInt = 9;
+
+	UPROPERTY(EDitInstanceOnly)
+	int32 EditInstanceOnlyInt = 14;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 EditAnywhere = 2323;
 
 protected:
 	// Called when the game starts or when spawned
