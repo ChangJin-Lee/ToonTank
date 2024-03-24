@@ -17,11 +17,16 @@ class TOONTANKS_API ATank : public ABasePawn
 public:
 	ATank();
 
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "components")
 	class USpringArmComponent* springarm;
 
 	UPROPERTY(VisibleAnywhere,Category = "components")
 	class UCameraComponent* camera;
+
+	void Move(float Value);
 	
 };
