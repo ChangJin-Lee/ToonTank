@@ -24,9 +24,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "components")
 	class USpringArmComponent* springarm;
 
-	UPROPERTY(VisibleAnywhere,Category = "components")
+	UPROPERTY(VisibleAnywhere, Category = "components")
 	class UCameraComponent* camera;
 
 	void Move(float Value);
+
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float moveSpeed = 300.0f;
 	
 };
