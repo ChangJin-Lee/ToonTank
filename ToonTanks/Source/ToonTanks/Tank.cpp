@@ -22,6 +22,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	// 문자열 리터럴(축 이름), 함수를 바인드하는 대상 객체의 포인터(게임 안에 있는 폰 탱크), 함수의 주소 
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
+	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
 }
 
 void ATank::Move(float Value)
@@ -36,5 +37,15 @@ void ATank::Move(float Value)
 	// X = Value * DeltaTime * Speed
 	// DeltaLocation.X = Value;
 	DeltaLocation.X = Value * deltaTime * moveSpeed;
-	AddActorLocalOffset(DeltaLocation);
+	// 2번째 매개변수는 bSweep이고 물체가 부딪치게끔 해준다
+	AddActorLocalOffset(DeltaLocation, true);
+}
+
+void ATank::Turn(float Value)
+{
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	// Yaw = Value * DeltaTime * TurnRate
+	double deltaTime = UGameplayStatics::GetWorldDeltaSeconds(this);
+	DeltaRotation.Yaw = Value * deltaTime * turnRate;
+	AddActorLocalRotation(DeltaRotation, true);
 }
