@@ -20,6 +20,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	
 private:
 	UPROPERTY(VisibleAnywhere, Category = "components")
 	class USpringArmComponent* springarm;
@@ -33,6 +37,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float turnRate = 80.0f;
 
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float Noah = 80.0f;
+
 	void Move(float Value);
 	void Turn(float Value);
+
+	APlayerController* PlayerControllerRef; // Ref는 포인터라는 의미
+	
 };

@@ -25,6 +25,26 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
 }
 
+// Called when the game starts or when spawned
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// "AController*의 타입 APlayerController*에 대입할 수 없습니다"
+	// AController가 상위 타입의 오브젝트이다
+	// 상위 타입의 오브젝트를 가져와 하위 타입 포인터에 저장할 수 없다.
+	// Cast을 해주어야한다!
+	// AController 포인터 타입의 값이 있을 경우, Cast라는 함수를 사용해
+	// 포린터 타입을 APlayerController로 바꿀 수 있다.
+	// 오브젝트 자체가 캐스팅하려는 타입에 해당한다면, 캐스팅은 한 포인터 타입을
+	// 다른 포인터 타입으로 바꿔준다
+	// 유효하지 않은 타입으로 캐스팅하려고 할 경우, 예를들어 APlayerController 오브젝트를
+	// 가리키는 AController 타입을 ACharacter에 캐스팅하려고 한다면 Cast 함수가 Null을 반환하고
+	// 캐스팅에 실패한다.
+	// Cast<타입>(포인터변수) 로 쓴다.
+	PlayerControllerRef = Cast<APlayerController>(GetController()); 
+}
+
 void ATank::Move(float Value)
 {
 	// UE_LOG(LogTemp, Display, TEXT("Value : %f"), Value);
