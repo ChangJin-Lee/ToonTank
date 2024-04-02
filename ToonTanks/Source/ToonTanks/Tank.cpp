@@ -35,7 +35,7 @@ void ATank::BeginPlay()
 	// 상위 타입의 오브젝트를 가져와 하위 타입 포인터에 저장할 수 없다.
 	// Cast을 해주어야한다!
 	// AController 포인터 타입의 값이 있을 경우, Cast라는 함수를 사용해
-	// 포린터 타입을 APlayerController로 바꿀 수 있다.
+	// 포인터 타입을 APlayerController로 바꿀 수 있다.
 	// 오브젝트 자체가 캐스팅하려는 타입에 해당한다면, 캐스팅은 한 포인터 타입을
 	// 다른 포인터 타입으로 바꿔준다
 	// 유효하지 않은 타입으로 캐스팅하려고 할 경우, 예를들어 APlayerController 오브젝트를
