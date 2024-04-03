@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 ATank::ATank()
 {
@@ -25,6 +26,45 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
 }
 
+// Called every frame
+void ATank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	// FVector DeltaLocation(0.f);
+	// DeltaLocation.X = 2.f;
+	// AddActorLocalOffset(DeltaLocation);
+
+	// PlayerControllerRef가 유효한지 확인해야한다.
+	// 포인터는 항상 null 포인터인지 아닌지 확인해야한다.
+	if(PlayerControllerRef)
+	{
+		FHitResult HitResult;
+		PlayerControllerRef->GetHitResultUnderCursor(
+			ECollisionChannel::ECC_Visibility,
+			false,
+			HitResult);
+		
+		// DrawDebugSphere(
+		// 	GetWorld(),
+		// 	GetActorLocation() + FVector(0.0f,0.0f,100.0f),
+		// 	100.f,
+		// 	24,
+		// 	FColor::Red,
+		// 	false,
+		// 	-1);
+
+		DrawDebugSphere(
+			GetWorld(),
+			HitResult.ImpactPoint,
+			50.f,
+			24,
+			FColor::Red,
+			false,
+			-1.f);
+	}
+}
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
@@ -42,7 +82,24 @@ void ATank::BeginPlay()
 	// 가리키는 AController 타입을 ACharacter에 캐스팅하려고 한다면 Cast 함수가 Null을 반환하고
 	// 캐스팅에 실패한다.
 	// Cast<타입>(포인터변수) 로 쓴다.
-	PlayerControllerRef = Cast<APlayerController>(GetController()); 
+	PlayerControllerRef = Cast<APlayerController>(GetController());
+
+	// UWorld : 월드를 가져와야한다
+	// Center : 구체의 중심을 나타내야한다.
+	// Radius : 구체의 반경
+	// Segment : 세그먼트 개수,
+	// Color : 색깔
+	// bPersistentLine : 불리언 값
+	// LifeTime : -1이 디폴트 하나의 프레임에만 디버그 구체를 그린다는 의미.
+	// 30.f를 넣으면 30초동안 유지됨.
+	DrawDebugSphere(
+		GetWorld(),
+		GetActorLocation() + FVector(0.f,0.f,200.f),
+		200.f,
+		12,
+		FColor::Red,
+		true,
+		30.f);
 }
 
 void ATank::Move(float Value)
