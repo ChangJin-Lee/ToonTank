@@ -37,6 +37,9 @@ void ATank::Tick(float DeltaTime)
 
 	// PlayerControllerRef가 유효한지 확인해야한다.
 	// 포인터는 항상 null 포인터인지 아닌지 확인해야한다.
+	// ECollisionChannel은 열겨형 타입이다.
+	// bTraceComplex를 false로 했고
+	// HitResult에 충돌 결과를 저장했다.
 	if(PlayerControllerRef)
 	{
 		FHitResult HitResult;
@@ -57,11 +60,16 @@ void ATank::Tick(float DeltaTime)
 		DrawDebugSphere(
 			GetWorld(),
 			HitResult.ImpactPoint,
-			50.f,
+			40.f,
 			24,
 			FColor::Red,
 			false,
 			-1.f);
+
+		// Location 쓰는거랑 무슨차이? GetHitResultUnderCursor로
+		// 어차피 위치를 가져온것 아닌가??
+		// RotateTurret(HitResult.Location);
+		RotateTurret(HitResult.ImpactPoint);
 	}
 }
 
