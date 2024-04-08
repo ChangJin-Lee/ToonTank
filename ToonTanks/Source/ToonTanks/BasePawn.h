@@ -15,41 +15,11 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
-	// 어디서든 보임
-	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	// int32 VisibleAnywhereInt = 32;
-	//
-	// // 어디서든 보이고 편집도 가능
-	// UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	// int32 EditAnywhereInt = 32;
-	//
-	// // 인스턴스에서만 보이고 디폴트 블루프린트에서 안보임
-	// UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite)
-	// int32 VisibleInstanceOnlyInt = 32;
-	//
-	// // 디폴트 블루프린트에서만 보임
-	// UPROPERTY(VisibleDefaultsOnly)
-	// int32 VisibleDefulatsOnlyInt = 5;
-	//
-	// // 인스턴스에서만 보임
-	// UPROPERTY(VisibleInstanceOnly)
-	// int32 RunSpeed = 10;
-	//
-	// UPROPERTY(EditDefaultsOnly)
-	// int32 EditDefaultsOnlyInt = 9;
-	//
-	// UPROPERTY(EDitInstanceOnly)
-	// int32 EditInstanceOnlyInt = 14;
-	//
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	// int32 EditAnywhere = 2323;
-
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 	// Tank 뿐만 아니라 Turret도 회전이 되도록 만들거기 때문에 BasePawn.h에 선언해준다.
 	// protected에 선언한 이유는 하위 클래스에서만 사용 가능하도록 만들기 위함임.
 	void RotateTurret(FVector LookAtTarget);
+	void Fire();
 
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))

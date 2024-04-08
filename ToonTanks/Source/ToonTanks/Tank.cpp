@@ -24,6 +24,8 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	// 문자열 리터럴(축 이름), 함수를 바인드하는 대상 객체의 포인터(게임 안에 있는 폰 탱크), 함수의 주소 
 	PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &ATank::Move);
 	PlayerInputComponent->BindAxis(TEXT("Turn"), this, &ATank::Turn);
+
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATank::Fire);
 }
 
 // Called every frame
@@ -56,15 +58,15 @@ void ATank::Tick(float DeltaTime)
 		// 	FColor::Red,
 		// 	false,
 		// 	-1);
-
-		DrawDebugSphere(
-			GetWorld(),
-			HitResult.ImpactPoint,
-			40.f,
-			24,
-			FColor::Red,
-			false,
-			-1.f);
+		//
+		// DrawDebugSphere(
+		// 	GetWorld(),
+		// 	HitResult.ImpactPoint,
+		// 	40.f,
+		// 	24,
+		// 	FColor::Red,
+		// 	false,
+		// 	-1.f);
 
 		// Location 쓰는거랑 무슨차이? GetHitResultUnderCursor로
 		// 어차피 위치를 가져온것 아닌가??
@@ -100,14 +102,14 @@ void ATank::BeginPlay()
 	// bPersistentLine : 불리언 값
 	// LifeTime : -1이 디폴트 하나의 프레임에만 디버그 구체를 그린다는 의미.
 	// 30.f를 넣으면 30초동안 유지됨.
-	DrawDebugSphere(
-		GetWorld(),
-		GetActorLocation() + FVector(0.f,0.f,200.f),
-		200.f,
-		12,
-		FColor::Red,
-		true,
-		30.f);
+	// DrawDebugSphere(
+	// 	GetWorld(),
+	// 	GetActorLocation() + FVector(0.f,0.f,200.f),
+	// 	200.f,
+	// 	12,
+	// 	FColor::Red,
+	// 	true,
+	// 	30.f);
 }
 
 void ATank::Move(float Value)
