@@ -26,5 +26,12 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="Combat")
 	float FireRange = 1200.f;
-	
+
+	// 콜백함수를 만든다.
+	// 이렇게 하면 2초에 한번씩 실행되게 할 수 있음.
+	FTimerHandle FireRateTimerHandle;
+	float FireRate = 2.f;
+	void CheckFireCondition();
+
+	bool InFireRange();
 };
