@@ -2,8 +2,12 @@
 
 
 #include "BasePawn.h"
+
+#include "Projectile.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/MeshComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Projectile.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -41,14 +45,21 @@ void ABasePawn::RotateTurret(FVector LookAtTarget)
 void ABasePawn::Fire()
 {
 	// ProjectileSpawnPoint로 발사 위치를 알고 있으니까 GetComponentLocation로 해당 위치를 가져온다.
-	FVector ProjectileSpawnPointLocation = ProjectileSpawnPoint->GetComponentLocation();
-	DrawDebugSphere(
-		GetWorld(),
-		ProjectileSpawnPointLocation,
-		24.f,
-		24,
-		FColor::Red,
-		false,
-		3.0f
-		);
+	FVector Location = ProjectileSpawnPoint->GetComponentLocation();
+	// ProjectileSpawnPoint로 발사 위치를 알고 있으니까 GetComponentLocation로 해당 회전을 가져온다.
+	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
+	// AProjectile로 Location, Rotation을 넘긴다.
+	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
+	
+
+	// 위치를 보기 위함.
+	// DrawDebugSphere(
+	// 	GetWorld(),
+	// 	Location,
+	// 	24.f,
+	// 	24,
+	// 	FColor::Red,
+	// 	false,
+	// 	3.0f
+	// 	);
 }

@@ -42,4 +42,23 @@ private:
 	//
 	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Super Duper Variables", meta = (AllowPrivateAccess = "true"))
 	// int32 EditAnyWhereInt2 = 32;
+
+	// 발사체를 얻기 위함
+	// 클래스 타입을 나타내는 c++ 변수를 갖게 되었다
+	// 타입은 AProjectile이고 블루프린트 클래스도 이걸 바탕으로 만든다
+	// UClass 타입을 저장한다. UClass에는 c++와 블루프린트 사이 리플렉션을 가능하게 하는
+	// 함수가 내장되어 있다.
+	// 왜 TSubcalssOf 인가? -> 이거 템플릿임
+	// Spawn 액터가 어떻게 동작하는지를 봐야한다.
+	// SpawnActor는 UWorld 클래스에 속하는 함수이다.
+	// World를 가져오면 SpawnActor를 호출할 수 있다.
+	// SpawnActor<>()
+	// SpawnActor는 또 다른 템플릿 함수이고 기본 하위 객체를 생성하는 것과 유사하게
+	// 새로운 객체를 생성하도록 되어 있다.
+	// 기본 하위 객체를 생성하는 것은 컴포넌트를 생성하기 위해 설계되었고
+	// 우리는 특정 클래스를 위한 생성자에서만 사용할 수 있다.
+	// SpawnActor는 게임이 실행되는 동안 호출될 수 있고 액터를 생성한다 
+	// 템플릿이기 때문에 타입이 필요하다.
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectile> ProjectileClass;
 };
