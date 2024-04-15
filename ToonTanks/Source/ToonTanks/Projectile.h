@@ -22,9 +22,21 @@ protected:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	class UStaticMeshComponent* ProjectileMesh;
+
+	UPROPERTY(VisibleAnywhere, Category = "Movement")
+	class UProjectileMovementComponent* ProjectileMovement;
+
+	// 콜백함수가 작동하려면 UFUNCTION이어야만 함
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float ProjectileInitialSpeed = 1300.f;
+	
+	UPROPERTY(EditAnywhere, Category = "Movement")
+	float ProjectileMaxSpeed = 1500.f;
 };
