@@ -42,10 +42,10 @@ void ATank::Tick(float DeltaTime)
 	// ECollisionChannel은 열겨형 타입이다.
 	// bTraceComplex를 false로 했고
 	// HitResult에 충돌 결과를 저장했다.
-	if(PlayerControllerRef)
+	if(TankPlayerController)
 	{
 		FHitResult HitResult;
-		PlayerControllerRef->GetHitResultUnderCursor(
+		TankPlayerController->GetHitResultUnderCursor(
 			ECollisionChannel::ECC_Visibility,
 			false,
 			HitResult);
@@ -75,6 +75,13 @@ void ATank::Tick(float DeltaTime)
 	}
 }
 
+void ATank::HandleDestruction()
+{
+	Super::HandleDestruction();
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+}
+
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
@@ -92,7 +99,7 @@ void ATank::BeginPlay()
 	// 가리키는 AController 타입을 ACharacter에 캐스팅하려고 한다면 Cast 함수가 Null을 반환하고
 	// 캐스팅에 실패한다.
 	// Cast<타입>(포인터변수) 로 쓴다.
-	PlayerControllerRef = Cast<APlayerController>(GetController());
+	TankPlayerController = Cast<APlayerController>(GetController());
 
 	// UWorld : 월드를 가져와야한다
 	// Center : 구체의 중심을 나타내야한다.

@@ -4,6 +4,8 @@
 #include "Projectile.h"
 #include "Components/MeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -37,12 +39,22 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	AActor* owner = GetOwner();
-	
-	// UE_LOG(LogTemp, Warning, TEXT("My Name is %s"), *owner->GetName());
-	UE_LOG(LogTemp, Warning, TEXT("HitComp Name is %s"), *HitComp->GetName());
-	UE_LOG(LogTemp, Warning, TEXT("OtherActor Name is %s"), *OtherActor->GetName());
-	UE_LOG(LogTemp, Warning, TEXT("OtherComp Name is %s"), *OtherComp->GetName());
+	// 찍어보기
+	// UE_LOG(LogTemp, Warning, TEXT("HitComp Name is %s"), *HitComp->GetName());
+	// UE_LOG(LogTemp, Warning, TEXT("OtherActor Name is %s"), *OtherActor->GetName());
+	// UE_LOG(LogTemp, Warning, TEXT("OtherComp Name is %s"), *OtherComp->GetName());
 
-	UE_LOG(LogTemp, Warning, TEXT("OnHit"));
+	auto MyOwner = GetOwner();
+	if(MyOwner==nullptr) return;
+
+	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
+	auto DamageTypeClass = UDamageType::StaticClass();
+	// UDamageType을 블루프린트 기반으로 만들거나 별도 데이터를 설정하는게 아니기 때문에
+	// TSubclassOf 변수는 필요 없다.
+
+	if(OtherActor && OtherActor != this && OtherActor != MyOwner)
+	{
+		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
+		Destroy();
+	}
 }

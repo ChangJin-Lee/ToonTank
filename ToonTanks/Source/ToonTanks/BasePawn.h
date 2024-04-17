@@ -15,6 +15,8 @@ public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
 
+	void HandleDestruction();
+
 protected:
 	// Tank 뿐만 아니라 Turret도 회전이 되도록 만들거기 때문에 BasePawn.h에 선언해준다.
 	// protected에 선언한 이유는 하위 클래스에서만 사용 가능하도록 만들기 위함임.

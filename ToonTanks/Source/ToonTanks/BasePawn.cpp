@@ -29,6 +29,11 @@ ABasePawn::ABasePawn()
 	
 }
 
+void ABasePawn::HandleDestruction()
+{
+	// TODO: Visual/Sound Effect
+}
+
 void ABasePawn::RotateTurret(FVector LookAtTarget)
 {
 	FVector ToTarget = LookAtTarget - TurretMesh->GetComponentLocation();
@@ -49,8 +54,8 @@ void ABasePawn::Fire()
 	// ProjectileSpawnPoint로 발사 위치를 알고 있으니까 GetComponentLocation로 해당 회전을 가져온다.
 	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
 	// AProjectile로 Location, Rotation을 넘긴다.
-	GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
-	
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
+	Projectile->SetOwner(this);
 
 	// 위치를 보기 위함.
 	// DrawDebugSphere(

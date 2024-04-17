@@ -29,14 +29,17 @@ private:
 	// 콜백함수가 작동하려면 UFUNCTION이어야만 함
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
+	UPROPERTY(EditAnywhere)
+	float Damage = 50.f;
 	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float ProjectileInitialSpeed = 1300.f;
+	float ProjectileInitialSpeed = 1800.f;
 	
 	UPROPERTY(EditAnywhere, Category = "Movement")
-	float ProjectileMaxSpeed = 1500.f;
+	float ProjectileMaxSpeed = 2000.f;
 };
