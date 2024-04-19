@@ -45,7 +45,11 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	// UE_LOG(LogTemp, Warning, TEXT("OtherComp Name is %s"), *OtherComp->GetName());
 
 	auto MyOwner = GetOwner();
-	if(MyOwner==nullptr) return;
+	if(MyOwner==nullptr)
+	{
+		Destroy();
+		return;
+	}
 
 	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
 	auto DamageTypeClass = UDamageType::StaticClass();
@@ -55,6 +59,12 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	if(OtherActor && OtherActor != this && OtherActor != MyOwner)
 	{
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, MyOwnerInstigator, this, DamageTypeClass);
-		Destroy();
+		//SpawnEmitterAtLocation 사용전에 HitParticles 파티클 시스템이 존재하는지 확인해야한다.
+		if(HitParticles)
+		{
+			UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+		}
 	}
+	
+	Destroy();
 }
