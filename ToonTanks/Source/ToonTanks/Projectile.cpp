@@ -53,15 +53,19 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 	// UE_LOG(LogTemp, Warning, TEXT("OtherActor Name is %s"), *OtherActor->GetName());
 	// UE_LOG(LogTemp, Warning, TEXT("OtherComp Name is %s"), *OtherComp->GetName());
 
-	auto MyOwner = GetOwner();
+	
+	AActor* MyOwner = GetOwner();
+	// auto MyOwner = GetOwner();
+	
 	if(MyOwner==nullptr)
 	{
 		Destroy();
 		return;
 	}
 
-	auto MyOwnerInstigator = MyOwner->GetInstigatorController();
-	auto DamageTypeClass = UDamageType::StaticClass();
+	// 언리얼 엔진 코딩 관행에서는 auto 사용을 권장하지 않는다.
+	AController* MyOwnerInstigator = MyOwner->GetInstigatorController();
+	UClass* DamageTypeClass = UDamageType::StaticClass();
 	// UDamageType을 블루프린트 기반으로 만들거나 별도 데이터를 설정하는게 아니기 때문에
 	// TSubclassOf 변수는 필요 없다.
 
@@ -76,6 +80,10 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 		if(HitSound)
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+		}
+		if(HitCameraShakeClass)
+		{
+			GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
 		}
 	}
 

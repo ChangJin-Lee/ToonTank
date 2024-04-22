@@ -36,5 +36,6 @@ private:
 	void HandleGameStart();
 
 	int32 TargetTowers = 0;
+	UFUNCTION(BlueprintCallable)
 	int32 GetTargetTower();
 };

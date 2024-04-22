@@ -39,6 +39,10 @@ void ABasePawn::HandleDestruction()
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 	}
+	if(DeathCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(DeathCameraShakeClass);
+	}
 }
 
 void ABasePawn::RotateTurret(FVector LookAtTarget)
@@ -61,7 +65,7 @@ void ABasePawn::Fire()
 	// ProjectileSpawnPoint로 발사 위치를 알고 있으니까 GetComponentLocation로 해당 회전을 가져온다.
 	FRotator Rotation = ProjectileSpawnPoint->GetComponentRotation();
 	// AProjectile로 Location, Rotation을 넘긴다.
-	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
+	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, Location, Rotation);
 	Projectile->SetOwner(this);
 
 	// 위치를 보기 위함.
