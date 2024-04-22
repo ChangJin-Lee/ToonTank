@@ -28,6 +28,9 @@ protected:
 	USceneComponent* ProjectileSpawnPoint;
 
 private:
+	UPROPERTY(EditAnywhere, Category="Emitter")
+	class UParticleSystem* DeathEffectParticle;
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UCapsuleComponent* CapsuleComp;
 	
@@ -36,8 +39,6 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* TurretMesh;
-	
-	
 	
 	// UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Super Duper Variables", meta = (AllowPrivateAccess = "true"))
 	// int32 VisibleAnywhereInt2 = 32;
@@ -63,4 +64,7 @@ private:
 	// 템플릿이기 때문에 타입이 필요하다.
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category="Combat")
+	class USoundBase* DeathSound;
 };
